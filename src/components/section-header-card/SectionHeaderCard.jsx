@@ -46,7 +46,7 @@ const SectionHeaderCard = ({ icon, title, end }) => {
         </Stack>
         <Box
           sx={{
-            borderBottom: "48px solid black",
+            borderBottom: "48px solid #1D1D1D",
             borderLeft: "24px solid transparent",
             position: "absolute",
             inset: "0",

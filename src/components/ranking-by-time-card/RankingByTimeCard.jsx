@@ -13,7 +13,7 @@ import SectionHeaderCard from "../section-header-card/SectionHeaderCard";
 
 const RankingByTimeCard = () => {
   return (
-    <>
+    <Box>
       <SectionHeaderCard
         icon={
           <RankIcon
@@ -21,7 +21,6 @@ const RankingByTimeCard = () => {
               zIndex: 1,
               width: "48px",
               height: "48px",
-              marginTop: "8px",
               color: "white",
             }}
           />
@@ -41,9 +40,8 @@ const RankingByTimeCard = () => {
           </Button>
         }
       />
-
-      <Box>
-        <Grid container spacing={2} sx={{ width: "100%", marginBottom: "8px" }}>
+      <Stack sx={{ backgroundColor: "black", padding: "16px" }} spacing={1}>
+        <Grid container columnSpacing={1}>
           <Grid item xs={4}>
             <SelectInput
               label={"Experience"}
@@ -71,6 +69,8 @@ const RankingByTimeCard = () => {
               options={[{ value: "SR5", label: "SR5" }]}
             />
           </Grid>
+        </Grid>
+        <Grid container columnSpacing={1}>
           <Grid item xs={6}>
             <SelectInput
               label={"Time"}
@@ -90,9 +90,10 @@ const RankingByTimeCard = () => {
             />
           </Grid>
         </Grid>
-        <Top3Ranking />
-      </Box>
-    </>
+      </Stack>
+
+      <Top3Ranking />
+    </Box>
   );
 };
 
