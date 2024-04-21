@@ -5,8 +5,8 @@ import Profile from "./routes/Profile";
 import Ranking from "./routes/Ranking";
 import Results from "./routes/Results";
 import Tracks from "./routes/Tracks";
-import Challenges from "./routes/Challenges";
 import Home from "./routes/Home";
+import EditProfile from "./routes/EditProfile";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +22,10 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
+        path: "/edit-profile",
+        element: <EditProfile />,
+      },
+      {
         path: "/ranking",
         element: <Ranking />,
       },
@@ -32,10 +36,6 @@ const router = createBrowserRouter([
       {
         path: "/tracks",
         element: <Tracks />,
-      },
-      {
-        path: "/challenges",
-        element: <Challenges />,
       },
     ],
   },

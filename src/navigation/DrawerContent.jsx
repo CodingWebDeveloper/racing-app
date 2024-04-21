@@ -51,16 +51,11 @@ const DrawerContent = () => {
     navigate("/tracks");
   };
 
-  const handleNavigateChallenges = () => {
-    navigate("/challenges");
-  };
-
   const isDashboard = pathname === "/";
   const isProfile = pathname === "/profile";
   const isRanking = pathname === "/ranking";
   const isResults = pathname === "/results";
   const isTracks = pathname === "/tracks";
-  const isChallenges = pathname === "/challenges";
 
   return (
     <div>
@@ -158,33 +153,6 @@ const DrawerContent = () => {
             <ListItemText
               sx={{ color: "white", fontWeight: "bold" }}
               primary="Tracks"
-            />
-          </ListItemButton>
-        </ListItem>
-        <ListItem
-          sx={isChallenges ? activeStyles : {}}
-          onClick={handleNavigateChallenges}
-          disablePadding
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <Profile
-                sx={{
-                  color: "#C80314",
-                  transform: "rotateY(180deg) rotateZ(-30deg)",
-                }}
-              />
-              <Profile
-                sx={{
-                  color: "#C80314",
-                  transform:
-                    "translateX(-10px) translateY(-3px) rotateZ(-30deg)",
-                }}
-              />
-            </ListItemIcon>
-            <ListItemText
-              sx={{ color: "white", fontWeight: "bold" }}
-              primary="Challenges"
             />
           </ListItemButton>
         </ListItem>
