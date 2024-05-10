@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
 import ProfileInfoCard from "../components/profile-info-card/ProfileInfoCard";
 import SpeedIcon from "@mui/icons-material/Speed";
@@ -8,7 +9,6 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import HexagonOutlinedIcon from "@mui/icons-material/HexagonOutlined";
 import GroupIcon from "@mui/icons-material/Group";
 import Results from "@mui/icons-material/EmojiFlags";
-import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   // General hooks
@@ -18,6 +18,7 @@ const Profile = () => {
   const handleNavigateEditProfile = () => {
     navigate("/edit-profile");
   };
+
   return (
     <Box sx={{ width: "90%" }}>
       <Box
