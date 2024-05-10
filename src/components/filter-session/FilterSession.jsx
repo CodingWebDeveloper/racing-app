@@ -23,7 +23,7 @@ const FilterSession = () => {
         alignItems="center"
       >
         <FilterListIcon fontSize="large" sx={{ color: "red" }} />
-        <Typography sx={{ fontStyle: "uppercase", color: "white" }}>
+        <Typography sx={{ textTransform: "uppercase", color: "white" }}>
           Filter session by
         </Typography>
       </Stack>
