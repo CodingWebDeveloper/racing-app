@@ -84,7 +84,7 @@ const AppDrawer = (props) => {
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
-                  placeholder="Search…"
+                  placeholder="Find Friends"
                   inputProps={{ "aria-label": "search" }}
                 />
               </Search>
