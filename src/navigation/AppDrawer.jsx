@@ -16,9 +16,11 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import LocalPoliceIcon from "@mui/icons-material/LocalPolice";
-import SettingsIcon from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
+
 import Tracks from "@mui/icons-material/Route";
 import DrawerContent from "./DrawerContent";
+import { signOutUser } from "../utils/firebase";
 
 const drawerWidth = 240;
 
@@ -99,14 +101,9 @@ const AppDrawer = (props) => {
               </Stack>
             </Grid>
             <Grid item>
-              <Stack direction="row">
-                <IconButton>
-                  <LocalPoliceIcon sx={{ color: "white", fill: "red" }} />
-                </IconButton>
-                <IconButton>
-                  <SettingsIcon sx={{ color: "white" }} />
-                </IconButton>
-              </Stack>
+              <IconButton onClick={signOutUser}>
+                <LogoutIcon sx={{ color: "white" }} />
+              </IconButton>
             </Grid>
           </Grid>
         </Toolbar>

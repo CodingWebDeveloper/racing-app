@@ -1,10 +1,10 @@
 import React from "react";
 import AppDrawer from "../navigation/AppDrawer";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { Box, Container } from "@mui/material";
 
-const Root = () => {
-  return (
+const Root = ({ isAuthenticated }) => {
+  return isAuthenticated ? (
     <Box>
       <AppDrawer>
         <Container>
@@ -12,6 +12,8 @@ const Root = () => {
         </Container>
       </AppDrawer>
     </Box>
+  ) : (
+    <Navigate to="/login" />
   );
 };
 
