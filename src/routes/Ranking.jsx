@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Grid,
-  Paper,
   Stack,
   Table,
   TableBody,
@@ -15,8 +14,6 @@ import {
 } from "@mui/material";
 import React from "react";
 import SelectInput from "../components/select-input/SelectInput";
-import AccessibilityIcon from "@mui/icons-material/Accessibility";
-import TimerIcon from "@mui/icons-material/Timer";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import TrackIcon from "@mui/icons-material/Route";
 import { useGetBestLastSessionQuery } from "../store/slices/api/rankingApiSlice";
@@ -60,25 +57,7 @@ const Ranking = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
             <SelectInput
-              label="Age"
-              icon={<AccessibilityIcon sx={{ color: "red" }} />}
-              value={"1"}
-              handleChange={() => {}}
-              options={[{ value: "1", label: "Laute" }]}
-            />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <SelectInput
-              label="Year"
-              icon={<TimerIcon sx={{ color: "red" }} />}
-              value={"1"}
-              handleChange={() => {}}
-              options={[{ value: "1", label: "Laute" }]}
-            />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <SelectInput
-              label="Country"
+              label="City"
               icon={<LocationOnIcon sx={{ color: "red" }} />}
               value={"1"}
               handleChange={() => {}}

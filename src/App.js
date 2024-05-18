@@ -6,9 +6,8 @@ import {
   Route,
 } from "react-router-dom";
 import Root from "./routes/Root";
-import Profile from "./routes/Profile";
 import Ranking from "./routes/Ranking";
-import Results from "./routes/Results";
+import Profile from "./routes/Profile";
 import Tracks from "./routes/Tracks";
 import Home from "./routes/Home";
 import EditProfile from "./routes/EditProfile";
@@ -19,7 +18,10 @@ import { selectUser, setUser } from "./store/slices/usersSlice";
 import { useEffect, useState } from "react";
 import { onAuthStateChangedListener } from "./utils/firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetUserByRacerIdQuery } from "./store/slices/api/usersApiSlice";
+import {
+  useGetUserByEmailQuery,
+  useGetUserByRacerIdQuery,
+} from "./store/slices/api/usersApiSlice";
 
 function App() {
   // General hooks
@@ -38,8 +40,8 @@ function App() {
     data: userData,
     isLoading: isLoadingUser,
     isSuccess: isSuccessUser,
-  } = useGetUserByRacerIdQuery(
-    { racerId: user?.racerId },
+  } = useGetUserByEmailQuery(
+    { email: user?.email },
     {
       skip: !authState.isAuthenticated,
       refetchOnMountOrArgChange: true,
@@ -89,7 +91,6 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path="ranking" element={<Ranking />} />
-          <Route path="results" element={<Results />} />
           <Route path="tracks" element={<Tracks />} />
         </Route>
 

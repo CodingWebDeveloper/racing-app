@@ -16,3 +16,8 @@ export const RANKING_BEST_SESSION_URL = RANKING_URL + "/best-last-session";
 export const USER_LOGIN_URL = BACKEND_URL + "/racers/login";
 export const USER_REGISTER_URL = BACKEND_URL + "/racers/save";
 export const USER_GET_BY_RACER_ID = BACKEND_URL + "/racers/:racerId";
+export const USER_GET_BY_EMAIL = BACKEND_URL + "/racers/by-email";
+
+// Tracks url
+export const TRACKS_PREFERRED_URL =
+  BACKEND_URL + "/tracks/preferred-track/:racerId";

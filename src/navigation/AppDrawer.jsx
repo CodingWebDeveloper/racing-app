@@ -15,7 +15,6 @@ import {
   styled,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import LocalPoliceIcon from "@mui/icons-material/LocalPolice";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import Tracks from "@mui/icons-material/Route";
@@ -90,15 +89,6 @@ const AppDrawer = (props) => {
                   inputProps={{ "aria-label": "search" }}
                 />
               </Search>
-            </Grid>
-            <Grid item xs={2}>
-              <Stack direction="row" spacing={1}>
-                <Button color="inherit">
-                  <Tracks sx={{ marginRight: "8px" }} />
-                  <Typography>Tracks</Typography>
-                </Button>
-                <Button color="inherit">Home</Button>
-              </Stack>
             </Grid>
             <Grid item>
               <IconButton onClick={signOutUser}>

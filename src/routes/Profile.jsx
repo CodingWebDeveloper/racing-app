@@ -1,26 +1,55 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import SessionList from "../components/session-list/SessionList";
 import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
 import ProfileInfoCard from "../components/profile-info-card/ProfileInfoCard";
 import SpeedIcon from "@mui/icons-material/Speed";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TrackIcon from "@mui/icons-material/Route";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
-import HexagonOutlinedIcon from "@mui/icons-material/HexagonOutlined";
-import GroupIcon from "@mui/icons-material/Group";
-import Results from "@mui/icons-material/EmojiFlags";
+import ResultsIcon from "@mui/icons-material/EmojiFlags";
+import FilterSession from "../components/filter-session/FilterSession";
+import { useSelector } from "react-redux";
+import { selectUser } from "../store/slices/usersSlice";
+import { useGetUserByRacerIdQuery } from "../store/slices/api/usersApiSlice";
+import { useGetPreferredTrackQuery } from "../store/slices/api/tracksApiSlice";
 
 const Profile = () => {
   // General hooks
   const navigate = useNavigate();
+
+  // Selectors
+  const user = useSelector(selectUser);
+
+  // Queries
+  const { data: racerData } = useGetUserByRacerIdQuery(
+    {
+      racerId: user?.racerId,
+    },
+    {
+      skip: user?.racerId,
+    }
+  );
+
+  const { data: preferredTrackData } = useGetPreferredTrackQuery(
+    {
+      racerId: user?.racerId,
+    },
+    {
+      skip: user?.racerId,
+    }
+  );
 
   // Handlers
   const handleNavigateEditProfile = () => {
     navigate("/edit-profile");
   };
 
+  const { racerStatistics } = racerData ?? {};
+  const { drivenKms, drivenTimeMinutes } = racerStatistics ?? {};
+
   return (
-    <Box sx={{ width: "90%" }}>
+    <Stack rowGap={3} columnGap={3}>
       <Box
         sx={{
           height: "320px",
@@ -43,7 +72,7 @@ const Profile = () => {
           <Stack direction="row" alignItems="center" spacing={1}>
             <SpeedIcon sx={{ color: "white", width: "36px", height: "36px" }} />
             <Typography sx={{ textTransform: "uppercase", color: "white" }}>
-              0.00 KM Distance
+              {drivenKms ?? 0} KM Distance
             </Typography>
           </Stack>
         </Grid>
@@ -53,7 +82,7 @@ const Profile = () => {
               sx={{ color: "white", width: "36px", height: "36px" }}
             />
             <Typography sx={{ textTransform: "uppercase", color: "white" }}>
-              00:00 Drive Hours
+              {drivenTimeMinutes ?? 0} Drive Minutes
             </Typography>
           </Stack>
         </Grid>
@@ -70,7 +99,7 @@ const Profile = () => {
                 color: "white",
               }}
             >
-              Ace Motorsport
+              {preferredTrackData?.trackName ?? ""}
             </Typography>
           </Stack>
         </Grid>
@@ -90,46 +119,23 @@ const Profile = () => {
           </Grid>
           <Grid item>
             <Button variant="text">
-              <Results sx={{ color: "white" }} />
+              <ResultsIcon sx={{ color: "white" }} />
               <Typography sx={{ color: "white", marginLeft: "8px" }}>
                 Results
               </Typography>
             </Button>
           </Grid>
-          <Grid item>
-            <Button variant="text">
-              <Box
-                sx={{
-                  position: "relative",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <HexagonOutlinedIcon
-                  sx={{
-                    color: "#8b0000",
-                    width: "36px",
-                    height: "36px",
-                  }}
-                />
-                <GroupIcon
-                  sx={{
-                    position: "absolute",
-                    width: "18px",
-                    height: "18px",
-                    color: "white",
-                  }}
-                />
-              </Box>
-              <Typography sx={{ color: "white", marginLeft: "8px" }}>
-                Friends
-              </Typography>
-            </Button>
-          </Grid>
         </Grid>
       </Box>
-    </Box>
+      <Grid container spacing={3}>
+        <Grid item xs={8}>
+          <SessionList />
+        </Grid>
+        <Grid item xs={4}>
+          <FilterSession />
+        </Grid>
+      </Grid>
+    </Stack>
   );
 };
 

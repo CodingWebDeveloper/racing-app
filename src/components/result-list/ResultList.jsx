@@ -60,7 +60,7 @@ const ResultList = () => {
         </Grid>
       </Grid>
       {results.map((result, index) => (
-        <ResultItem {...result} active={index === 2} />
+        <ResultItem key={result.id} {...result} active={index === 2} />
       ))}
       <Button
         fullWidth

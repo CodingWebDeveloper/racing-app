@@ -3,8 +3,14 @@ import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
 import SportsMotorsportsIcon from "@mui/icons-material/SportsMotorsports";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EditIcon from "@mui/icons-material/Edit";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../store/slices/usersSlice";
 
 const ProfileInfoCard = () => {
+  // Selectors
+  const user = useSelector(selectUser);
+  const { firstName, lastName, city, ageRange } = user ?? {};
+
   return (
     <Box
       sx={{
@@ -54,7 +60,7 @@ const ProfileInfoCard = () => {
         <Grid item xs>
           <Stack>
             <Typography sx={{ color: "white" }} variant="h3">
-              Erkan Kamber
+              {`${firstName} ${lastName}`}
             </Typography>
             <Stack direction="row" alignItems="center" spacing={1}>
               <Typography
@@ -65,7 +71,7 @@ const ProfileInfoCard = () => {
               </Typography>
               <LocationOnIcon sx={{ color: "red" }} />
               <Typography variant="caption" sx={{ color: "white" }}>
-                Asenovgrad, Bulgaria
+                {city}
               </Typography>
               <Divider
                 sx={{ backgroundColor: "white" }}
@@ -73,7 +79,7 @@ const ProfileInfoCard = () => {
                 flexItem
               />
               <Typography variant="caption" sx={{ color: "white" }}>
-                18-40
+                {ageRange}
               </Typography>
               <Divider
                 sx={{ backgroundColor: "white" }}

@@ -1,8 +1,27 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../store/slices/usersSlice";
+import { EXPERTISE } from "../../utils/utils";
 
 const DriverProgress = () => {
-  const progress = 55;
+  // Selectors
+  const user = useSelector(selectUser);
+
+  // Other variables
+  const { expertise } = user ?? {};
+
+  let progress;
+
+  if (expertise === EXPERTISE.BEGINNER) {
+    progress = 14;
+  } else if (expertise === EXPERTISE.DRIVER) {
+    progress = 35;
+  } else if (expertise === EXPERTISE.EXPERT) {
+    progress = 75;
+  } else {
+    progress = 100;
+  }
 
   return (
     <Box sx={{ transform: "skew(-20deg)" }}>

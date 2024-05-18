@@ -16,11 +16,12 @@ import {
 import Dashboard from "@mui/icons-material/FeaturedPlayList";
 import Profile from "@mui/icons-material/SportsMotorsports";
 import Ranking from "@mui/icons-material/EmojiEvents";
-import Results from "@mui/icons-material/EmojiFlags";
 import HexagonIcon from "@mui/icons-material/Hexagon";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Tracks from "@mui/icons-material/Route";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../store/slices/usersSlice";
 
 const activeStyles = {
   background:
@@ -28,9 +29,14 @@ const activeStyles = {
 };
 
 const DrawerContent = () => {
+  // General hooks
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  // Selectors
+  const user = useSelector(selectUser);
+
+  // Handlers
   const handleNavigateHome = () => {
     navigate("/");
   };
@@ -43,30 +49,28 @@ const DrawerContent = () => {
     navigate("/ranking");
   };
 
-  const handleNavigateResults = () => {
-    navigate("/results");
-  };
-
   const handleNavigateTracks = () => {
     navigate("/tracks");
   };
 
+  // Other variables
   const isDashboard = pathname === "/";
   const isProfile = pathname === "/profile";
   const isRanking = pathname === "/ranking";
-  const isResults = pathname === "/results";
   const isTracks = pathname === "/tracks";
-
+  const { firstName, lastName, expertise, photo } = user ?? {};
   return (
     <div>
       <Toolbar />
       <Divider />
       <Grid sx={{ paddingInline: "16px" }} container spacing={1}>
         <Grid item>
-          <Avatar />
+          <Avatar src={photo} />
         </Grid>
         <Grid item xs>
-          <Typography sx={{ color: "white" }}>Erkan Kamber</Typography>
+          <Typography
+            sx={{ color: "white" }}
+          >{`${firstName} ${lastName}`}</Typography>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Box sx={{ position: "relative" }}>
               <KeyboardArrowUpIcon
@@ -75,7 +79,7 @@ const DrawerContent = () => {
               <HexagonIcon sx={{ color: "#EE7B41" }} />
             </Box>
             <Typography sx={{ color: "white" }} variant="caption">
-              DRIVER
+              {expertise}
             </Typography>
           </Stack>
         </Grid>
@@ -123,21 +127,6 @@ const DrawerContent = () => {
             <ListItemText
               sx={{ color: "white", fontWeight: "bold" }}
               primary="Ranking"
-            />
-          </ListItemButton>
-        </ListItem>
-        <ListItem
-          sx={isResults ? activeStyles : {}}
-          onClick={handleNavigateResults}
-          disablePadding
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <Results sx={{ color: "#C80314" }} />
-            </ListItemIcon>
-            <ListItemText
-              sx={{ color: "white", fontWeight: "bold" }}
-              primary="Results"
             />
           </ListItemButton>
         </ListItem>

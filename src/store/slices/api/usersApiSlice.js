@@ -1,6 +1,7 @@
 import { query } from "firebase/database";
 import {
   API_METHODS,
+  USER_GET_BY_EMAIL,
   USER_GET_BY_RACER_ID,
   USER_LOGIN_URL,
   USER_REGISTER_URL,
@@ -30,8 +31,20 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
         url: USER_GET_BY_RACER_ID.replace(":racerId", racerId),
       }),
     }),
+    getUserByEmail: builder.query({
+      query: ({ email }) => ({
+        url: USER_GET_BY_EMAIL,
+        params: {
+          email,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetUserByRacerIdQuery, useLoginQuery, useRegisterMutation } =
-  usersApiSlice;
+export const {
+  useGetUserByEmailQuery,
+  useGetUserByRacerIdQuery,
+  useLoginQuery,
+  useRegisterMutation,
+} = usersApiSlice;
