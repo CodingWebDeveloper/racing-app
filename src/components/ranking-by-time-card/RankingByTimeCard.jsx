@@ -57,7 +57,7 @@ const RankingByTimeCard = () => {
               icon={<Track sx={{ color: "red" }} />}
               value={"1"}
               handleChange={() => {}}
-              options={[{ value: "1", label: "Laute" }]}
+              options={[{ value: "1", label: "Laute12" }]}
             />
           </Grid>
         </Grid>
