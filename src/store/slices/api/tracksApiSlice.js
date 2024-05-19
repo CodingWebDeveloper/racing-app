@@ -1,4 +1,7 @@
-import { TRACKS_PREFERRED_URL } from "../../../utils/api-constants";
+import {
+  TRACKS_GET_ALL_URL,
+  TRACKS_PREFERRED_URL,
+} from "../../../utils/api-constants";
 import { baseApiSlice } from "./baseApiSlice";
 
 export const tracksApiSlice = baseApiSlice.injectEndpoints({
@@ -9,7 +12,13 @@ export const tracksApiSlice = baseApiSlice.injectEndpoints({
       }),
       providesTags: ["TRACKS"],
     }),
+    getAllTracks: builder.query({
+      query: () => ({
+        url: TRACKS_GET_ALL_URL,
+      }),
+    }),
   }),
 });
 
-export const { useGetPreferredTrackQuery } = tracksApiSlice;
+export const { useGetAllTracksQuery, useGetPreferredTrackQuery } =
+  tracksApiSlice;

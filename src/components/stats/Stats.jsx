@@ -18,7 +18,7 @@ const Stats = () => {
       racerId: user?.racerId,
     },
     {
-      skip: user?.racerId,
+      skip: !user?.racerId,
     }
   );
 

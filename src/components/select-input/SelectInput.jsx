@@ -14,6 +14,9 @@ const SelectInput = ({ icon, value, options, handleChange, placeholder }) => {
         displayEmpty
         onChange={handleChange}
       >
+        <MenuItem value={null} disabled={true}>
+          -
+        </MenuItem>
         {options.map((o) => (
           <MenuItem value={o.value}>{o.label}</MenuItem>
         ))}

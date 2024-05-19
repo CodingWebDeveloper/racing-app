@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Button, Grid, Paper, Stack, Typography } from "@mui/material";
-import TimerIcon from "@mui/icons-material/Timer";
+import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
+import SportsMotorsportsIcon from "@mui/icons-material/SportsMotorsports";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import LapList from "../lap-list/LapList";
 
-const SessionCard = ({ session }) => {
-  const { place, total, name, bestLapTime, createdOn, location, kart } =
-    session;
+const SessionCard = ({ session, currentRaceId, handleSelect }) => {
+  const { raceId, racer, laps, raceKart, track } = session ?? {};
 
-  const [expanded, setExpanded] = useState(false);
-
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
+  // Other variables
+  const { firstName, lastName, photo } = racer;
+  const { trackName } = track;
+  const { model } = raceKart;
 
   return (
     <Box>
-      <Typography variant="h6" sx={{ color: "white" }}>
-        #{place}/{total}
-      </Typography>
       <Paper
         sx={{
           borderRadius: "8px",
@@ -27,45 +26,72 @@ const SessionCard = ({ session }) => {
       >
         <Grid container columnSpacing={2}>
           <Grid item sx={{ display: "flex", alignItems: "center" }}>
-            <img
-              src="https://admin.thecricketer.com/weblab/sites/96c8b790-b593-bfda-0ba4-ecd3a9fdefc2/resources/images/site/hales.jpg"
-              style={{
-                width: "60px",
-                height: "60px",
-                border: "1px solid black",
-              }}
-            />
+            {racer.photo ? (
+              <img
+                src={photo}
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  border: "1px solid black",
+                }}
+              />
+            ) : (
+              <Box
+                sx={{
+                  border: "3px solid #C9C4C2",
+                  marginTop: "-45px !important",
+                  height: "126px",
+                  width: "126px",
+                  backgroundColor: "#CFCFCF",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "relative",
+                }}
+              >
+                <SportsMotorsportsIcon
+                  sx={{ width: "63px", height: "63px", color: "#919191" }}
+                />
+              </Box>
+            )}
           </Grid>
           <Grid item xs>
             <Stack justifyContent="space-between" spacing={1}>
               <Grid container>
                 <Grid item xs={4}>
-                  <Typography sx={{ color: "white" }}>{name}</Typography>
-                </Grid>
-                <Grid item xs={4}>
                   <Typography
-                    sx={{ color: "#4caf50" }}
-                    fontWeight="bold"
-                  >{`Best time: ${bestLapTime}`}</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Stack direction="row" alignItems="center" spacing={1}>
-                    <TimerIcon sx={{ color: "white" }} fontSize="small" />
-                    <Typography sx={{ color: "white" }}>{createdOn}</Typography>
-                  </Stack>
+                    sx={{ color: "white" }}
+                  >{`${firstName} ${lastName}`}</Typography>
                 </Grid>
               </Grid>
               <Grid container alignItems="center">
                 <Grid item xs>
-                  <Typography sx={{ color: "white" }}>
-                    {location} {kart}
-                  </Typography>
+                  <Stack direction="row" alignItems="center">
+                    <LocationOnIcon fontSize="small" sx={{ color: "red" }} />
+                    <Typography sx={{ color: "white" }} variant="caption">
+                      {trackName}
+                    </Typography>
+                    <DirectionsCarIcon
+                      fontSize="small"
+                      sx={{ color: "red", marginLeft: 1 }}
+                    />
+                    <Typography sx={{ color: "white" }} variant="caption">
+                      {model}
+                    </Typography>
+                  </Stack>
                 </Grid>
                 <Grid item>
                   <Button
                     variant="contained"
-                    sx={{ transform: "skew(-15deg)" }}
                     color="success"
+                    onClick={() => {
+                      if (raceId === currentRaceId) {
+                        handleSelect(null);
+                      } else {
+                        handleSelect(raceId);
+                      }
+                    }}
+                    endIcon={<ExpandCircleDownIcon />}
                   >
                     Results
                   </Button>
@@ -75,6 +101,15 @@ const SessionCard = ({ session }) => {
           </Grid>
         </Grid>
       </Paper>
+      {currentRaceId === raceId && (
+        <Box
+          sx={{
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+          }}
+        >
+          <LapList laps={laps} />
+        </Box>
+      )}
     </Box>
   );
 };

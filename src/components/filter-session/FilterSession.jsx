@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Button,
   Checkbox,
   FormControlLabel,
   Paper,
@@ -7,13 +8,57 @@ import {
   Typography,
 } from "@mui/material";
 import SelectInput from "../select-input/SelectInput";
-import TimerIcon from "@mui/icons-material/Timer";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Track from "@mui/icons-material/Route";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import { useGetAllTracksQuery } from "../../store/slices/api/tracksApiSlice";
+import { useGetAllKartsQuery } from "../../store/slices/api/kartsApiSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearFilter,
+  selectKart,
+  selectTrack,
+  setKart,
+  setTrack,
+} from "../../store/slices/raceFilterSlice";
 
 const FilterSession = () => {
+  //General hooks
+  const dispatch = useDispatch();
+
+  // Queries
+  const track = useSelector(selectTrack);
+  const kart = useSelector(selectKart);
+
+  // Queries
+  const { data: allTracksData } = useGetAllTracksQuery();
+  const { data: allKartsData } = useGetAllKartsQuery();
+
+  // Handlers
+  const handleChangeTrack = (event) => {
+    dispatch(setTrack(event.target.value));
+  };
+
+  const handleChangeKart = (event) => {
+    dispatch(setKart(event.target.value));
+  };
+
+  const handleClearFilter = () => {
+    dispatch(clearFilter());
+  };
+  // Other variables
+  const trackOptions = allTracksData?.map((track) => ({
+    label: track.trackName,
+    value: track.trackId,
+  }));
+
+  const kartsOptions = allKartsData?.map((kart) => ({
+    label: kart.model,
+    value: kart.kartId,
+  }));
+
+  const showClearFilter = track || kart;
+
   return (
     <Paper sx={{ background: "rgba(0, 0, 0, 0.8)" }}>
       <Stack
@@ -23,62 +68,30 @@ const FilterSession = () => {
         alignItems="center"
       >
         <FilterListIcon fontSize="large" sx={{ color: "red" }} />
-        <Typography sx={{ textTransform: "uppercase", color: "white" }}>
+        <Typography
+          sx={{ textTransform: "uppercase", color: "white", flexGrow: 1 }}
+        >
           Filter session by
         </Typography>
+        {showClearFilter && (
+          <Button onClick={handleClearFilter}>Clear Filter</Button>
+        )}
       </Stack>
       <Stack sx={{ padding: 1 }} spacing={1} alignItems="start">
         <SelectInput
           label={"Track"}
           icon={<Track sx={{ color: "red" }} />}
-          value={"1"}
-          handleChange={() => {}}
-          options={[{ value: "1", label: "Laute" }]}
-        />
-        <SelectInput
-          label={"Time"}
-          icon={<TimerIcon sx={{ color: "red" }} />}
-          value={"All"}
-          handleChange={() => {}}
-          options={[{ value: "All", label: "All time" }]}
+          value={track}
+          handleChange={handleChangeTrack}
+          options={trackOptions ?? []}
         />
         <SelectInput
           label={"Car model"}
           icon={<DirectionsCarIcon sx={{ color: "red" }} />}
-          value={"SR5"}
-          handleChange={() => {}}
-          options={[{ value: "SR5", label: "SR5" }]}
+          value={kart}
+          handleChange={handleChangeKart}
+          options={kartsOptions ?? []}
         />
-        <Stack
-          width="100%"
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          spacing={1}
-        >
-          <EmojiEventsIcon fontSize="large" sx={{ color: "red" }} />
-          <FormControlLabel
-            control={<Checkbox defaultChecked />}
-            labelPlacement="start"
-            sx={{ color: "white" }}
-            label="Show Only Victories"
-          />
-        </Stack>
-        <Stack
-          width="100%"
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          spacing={1}
-        >
-          <TimerIcon fontSize="large" sx={{ color: "red" }} />
-          <FormControlLabel
-            control={<Checkbox defaultChecked />}
-            labelPlacement="start"
-            sx={{ color: "white" }}
-            label="Best Time Session"
-          />
-        </Stack>
       </Stack>
     </Paper>
   );

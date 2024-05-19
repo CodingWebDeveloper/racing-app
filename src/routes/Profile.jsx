@@ -27,7 +27,7 @@ const Profile = () => {
       racerId: user?.racerId,
     },
     {
-      skip: user?.racerId,
+      skip: !user?.racerId,
     }
   );
 
@@ -36,7 +36,7 @@ const Profile = () => {
       racerId: user?.racerId,
     },
     {
-      skip: user?.racerId,
+      skip: !user?.racerId,
     }
   );
 
