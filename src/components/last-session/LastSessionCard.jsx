@@ -1,8 +1,6 @@
 import React from "react";
-import { Typography, Button, Stack } from "@mui/material";
+import { Typography, Stack } from "@mui/material";
 import Results from "@mui/icons-material/EmojiFlags";
-import ShareIcon from "@mui/icons-material/Reply";
-import CloseIcon from "@mui/icons-material/Close";
 import SectionHeaderCard from "../section-header-card/SectionHeaderCard";
 
 const LastSessionCard = () => {
@@ -31,14 +29,6 @@ const LastSessionCard = () => {
               marginLeft: "32px !important",
             }}
           ></Typography>
-          <Button
-            sx={{ padding: "0px", textTransform: "unset" }}
-            variant="contained"
-          >
-            Share
-            <ShareIcon sx={{ transform: "rotateY(180deg)" }} fontSize="small" />
-          </Button>
-          <CloseIcon sx={{ color: "white" }} />
         </Stack>
       }
     />

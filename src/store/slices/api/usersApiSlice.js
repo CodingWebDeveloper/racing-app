@@ -38,6 +38,13 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
         },
       }),
     }),
+    updateUser: builder.mutation({
+      query: ({ racerId, userInput }) => ({
+        url: USER_GET_BY_RACER_ID_URL.replace(":racerId", racerId),
+        body: userInput,
+        method: API_METHODS.PATCH,
+      }),
+    }),
   }),
 });
 
@@ -46,4 +53,5 @@ export const {
   useGetUserByRacerIdQuery,
   useLoginQuery,
   useRegisterMutation,
+  useUpdateUserMutation,
 } = usersApiSlice;

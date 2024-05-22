@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Button,
   Grid,
   Stack,
   Table,
@@ -12,44 +11,70 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import SelectInput from "../components/select-input/SelectInput";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import TrackIcon from "@mui/icons-material/Route";
-import { useGetBestLastSessionQuery } from "../store/slices/api/rankingApiSlice";
-
-const rows = [
-  {
-    position: 1,
-    racerPhoto:
-      "https://wallup.net/wp-content/uploads/2019/09/385645-go-kart-kart-race-racing-13-jpg.jpg",
-    racerFirstName: "John",
-    racerLastName: "Doe",
-    raceDate: "2024-05-09",
-    bestTime: "PT56.8635",
-  },
-  {
-    position: 2,
-    racerPhoto:
-      "https://wallup.net/wp-content/uploads/2019/09/385645-go-kart-kart-race-racing-13-jpg.jpg",
-    racerFirstName: "John",
-    racerLastName: "Doe",
-    raceDate: "2024-05-09",
-    bestTime: "PT56.8635",
-  },
-  {
-    position: 3,
-    racerPhoto:
-      "https://wallup.net/wp-content/uploads/2019/09/385645-go-kart-kart-race-racing-13-jpg.jpg",
-    racerFirstName: "John",
-    racerLastName: "Doe",
-    raceDate: "2024-05-09",
-    bestTime: "PT56.8635",
-  },
-];
+import { useGetRankingQuery } from "../store/slices/api/rankingApiSlice";
+import LoadingSpinner from "../components/shared/LoadingSpinner";
+import { useSelector } from "react-redux";
+import { selectUser } from "../store/slices/usersSlice";
+import { useGetAllTracksQuery } from "../store/slices/api/tracksApiSlice";
+import { useGetAllKartsQuery } from "../store/slices/api/kartsApiSlice";
 
 const Ranking = () => {
-  const { data, isLoading } = useGetBestLastSessionQuery();
+  // Selectors
+  const user = useSelector(selectUser);
+
+  // States
+  const [filter, setFilter] = useState({ trackId: null, kartId: null });
+
+  // Queries
+  console.log({
+    racerId: user?.racerId,
+    trackId: filter.trackId,
+    kartId: filter.kartId,
+  });
+  const { data, isLoading } = useGetRankingQuery(
+    {
+      racerId: user?.racerId,
+      trackId: filter.trackId,
+      kartId: filter.kartId,
+    },
+    {
+      skip: !user?.racerId,
+    }
+  );
+  const { data: allTracksData } = useGetAllTracksQuery();
+  const { data: allKartsData } = useGetAllKartsQuery();
+
+  // Handlers
+  const handleChangeKart = (event) => {
+    const newKart = event.target.value;
+    setFilter({ ...filter, kartId: newKart });
+  };
+
+  const handleChangeTrack = (event) => {
+    const newTrack = event.target.value;
+    setFilter({ ...filter, trackId: newTrack });
+  };
+
+  // Other variables
+  const trackOptions =
+    allTracksData?.map((track) => ({
+      label: track.trackName,
+      value: track.trackId,
+    })) ?? [];
+
+  const kartOptions =
+    allKartsData?.map((kart) => ({
+      label: kart.model,
+      value: kart.kartId,
+    })) ?? [];
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <>
@@ -57,20 +82,20 @@ const Ranking = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
             <SelectInput
-              label="City"
+              label="Kart"
               icon={<LocationOnIcon sx={{ color: "red" }} />}
-              value={"1"}
-              handleChange={() => {}}
-              options={[{ value: "1", label: "Laute" }]}
+              value={filter.kartId}
+              handleChange={handleChangeKart}
+              options={kartOptions}
             />
           </Grid>
           <Grid item xs={12} md={3}>
             <SelectInput
               label="Track"
               icon={<TrackIcon sx={{ color: "red" }} />}
-              value={"1"}
-              handleChange={() => {}}
-              options={[{ value: "1", label: "Laute" }]}
+              value={filter.trackId}
+              handleChange={handleChangeTrack}
+              options={trackOptions}
             />
           </Grid>
         </Grid>
@@ -92,58 +117,65 @@ const Ranking = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.position}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 0 },
-                  ".MuiTableCell-root": {
-                    color: "white",
-                  },
-                }}
-              >
-                <TableCell>
-                  <Box
-                    sx={{
-                      backgroundColor: "white",
-                      borderRadius: "4px",
-                      paddingInline: "8px",
-                      position: "relative",
-                      color: "black",
-                      width: "fit-content",
+            {data?.map((row) => {
+              const {
+                position,
+                racerPhoto,
+                racerFirstName,
+                racerLastName,
+                raceDate,
+                bestTime,
+              } = row;
+              const name = `${racerFirstName} ${racerLastName}`;
 
-                      "&:after": {
-                        content: "''",
-                        height: "100%",
-                        width: "5px",
-                        background: "red",
-                        position: "absolute",
-                        left: 0,
-                        borderRadius: "8px 0px 0px 8px",
-                      },
-                    }}
-                  >
-                    {row.position}
-                  </Box>
-                </TableCell>
-                <TableCell>
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <Avatar src={row.racerPhoto} />
-                    <Typography>
-                      {`${row.racerFirstName} ${row.racerLastName}`}
-                    </Typography>
-                  </Stack>
-                </TableCell>
-                <TableCell>{row.raceDate}</TableCell>
-                <TableCell>{row.bestTime}</TableCell>
-              </TableRow>
-            ))}
+              return (
+                <TableRow
+                  key={row.position}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    ".MuiTableCell-root": {
+                      color: "white",
+                    },
+                  }}
+                >
+                  <TableCell>
+                    <Box
+                      sx={{
+                        backgroundColor: "white",
+                        borderRadius: "4px",
+                        paddingInline: "8px",
+                        position: "relative",
+                        color: "black",
+                        width: "fit-content",
+
+                        "&:after": {
+                          content: "''",
+                          height: "100%",
+                          width: "5px",
+                          background: "red",
+                          position: "absolute",
+                          left: 0,
+                          borderRadius: "8px 0px 0px 8px",
+                        },
+                      }}
+                    >
+                      {position}
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                      <Avatar src={racerPhoto} />
+                      <Typography>{name}</Typography>
+                    </Stack>
+                  </TableCell>
+                  <TableCell>{raceDate}</TableCell>
+                  <TableCell>{bestTime}</TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="contained" color="primary" fullWidth>
-        Load more results
-      </Button>
     </>
   );
 };

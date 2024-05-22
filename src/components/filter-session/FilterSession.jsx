@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Paper, Stack, Typography } from "@mui/material";
 import SelectInput from "../select-input/SelectInput";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Track from "@mui/icons-material/Route";
@@ -47,15 +40,17 @@ const FilterSession = () => {
     dispatch(clearFilter());
   };
   // Other variables
-  const trackOptions = allTracksData?.map((track) => ({
-    label: track.trackName,
-    value: track.trackId,
-  }));
+  const trackOptions =
+    allTracksData?.map((track) => ({
+      label: track.trackName,
+      value: track.trackId,
+    })) ?? [];
 
-  const kartsOptions = allKartsData?.map((kart) => ({
-    label: kart.model,
-    value: kart.kartId,
-  }));
+  const kartsOptions =
+    allKartsData?.map((kart) => ({
+      label: kart.model,
+      value: kart.kartId,
+    })) ?? [];
 
   const showClearFilter = track || kart;
 
@@ -83,14 +78,14 @@ const FilterSession = () => {
           icon={<Track sx={{ color: "red" }} />}
           value={track}
           handleChange={handleChangeTrack}
-          options={trackOptions ?? []}
+          options={trackOptions}
         />
         <SelectInput
           label={"Car model"}
           icon={<DirectionsCarIcon sx={{ color: "red" }} />}
           value={kart}
           handleChange={handleChangeKart}
-          options={kartsOptions ?? []}
+          options={kartsOptions}
         />
       </Stack>
     </Paper>

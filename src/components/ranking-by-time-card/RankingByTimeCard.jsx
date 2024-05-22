@@ -1,13 +1,9 @@
 import React from "react";
-import { Grid, Box, Stack, Typography, Button } from "@mui/material";
+import { Grid, Box, Stack } from "@mui/material";
 import Top3Ranking from "../top3-ranking/Top3Ranking";
-import ShareIcon from "@mui/icons-material/Reply";
 import RankIcon from "@mui/icons-material/Stars";
 import SelectInput from "../select-input/SelectInput";
-import Profile from "@mui/icons-material/SportsMotorsports";
-import TimelapseIcon from "@mui/icons-material/Timelapse";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import TimerIcon from "@mui/icons-material/Timer";
 import Track from "@mui/icons-material/Route";
 import SectionHeaderCard from "../section-header-card/SectionHeaderCard";
 
@@ -26,19 +22,6 @@ const RankingByTimeCard = () => {
           />
         }
         title="Ranking by time"
-        end={
-          <Button
-            sx={{
-              padding: "0px",
-              textTransform: "unset",
-              marginRight: "8px",
-            }}
-            variant="contained"
-          >
-            Share
-            <ShareIcon sx={{ transform: "rotateY(180deg)" }} fontSize="small" />
-          </Button>
-        }
       />
       <Stack sx={{ backgroundColor: "black", padding: "16px" }} spacing={1}>
         <Grid container columnSpacing={1}>

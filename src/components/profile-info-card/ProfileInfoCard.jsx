@@ -1,15 +1,67 @@
-import React from "react";
-import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  IconButton,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import SportsMotorsportsIcon from "@mui/icons-material/SportsMotorsports";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EditIcon from "@mui/icons-material/Edit";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../store/slices/usersSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser, setUser } from "../../store/slices/usersSlice";
+import CloseIcon from "@mui/icons-material/Close";
+import { useUpdateUserMutation } from "../../store/slices/api/usersApiSlice";
 
 const ProfileInfoCard = () => {
+  // General hooks
+  const dispatch = useDispatch();
+
   // Selectors
   const user = useSelector(selectUser);
-  const { firstName, lastName, city, ageRange } = user ?? {};
+  const { racerId, firstName, lastName, city, ageRange, photo } = user ?? {};
+
+  // States
+  const [open, setOpen] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+
+  // Queries
+  const [updateUser] = useUpdateUserMutation();
+
+  // Handlers
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      updateUser({
+        racerId,
+        userInput: {
+          photo: imageUrl,
+        },
+      }).unwrap();
+
+      dispatch(setUser({ ...user, photo: imageUrl }));
+      handleClose();
+    } catch (error) {}
+  };
+
+  const handleChangeImageUrl = (event) => {
+    setImageUrl(event.target.value);
+  };
 
   return (
     <Box
@@ -24,38 +76,61 @@ const ProfileInfoCard = () => {
     >
       <Grid container columnGap={3}>
         <Grid item>
-          <Box
-            sx={{
-              border: "3px solid #C9C4C2",
-              marginTop: "-45px !important",
-              height: "126px",
-              width: "126px",
-              backgroundColor: "#CFCFCF",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-            }}
-          >
-            <SportsMotorsportsIcon
-              sx={{ width: "63px", height: "63px", color: "#919191" }}
-            />
-            <Button
+          {photo ? (
+            <Box sx={{ position: "relative", height: "126px", width: "126px" }}>
+              <img height="100%" width="100%" src={photo} alt="profile" />
+              <Button
+                onClick={handleOpen}
+                sx={{
+                  backgroundColor: "rgba(0, 0, 0, .5)",
+                  ":hover": {
+                    backgroundColor: "rgb(0, 0, 0)",
+                  },
+                  color: "white",
+                  position: "absolute",
+                  left: 0,
+                  bottom: 0,
+                  textTransform: "unset",
+                }}
+              >
+                <EditIcon fontSize="small" />
+                <Typography variant="caption">Change Image</Typography>
+              </Button>
+            </Box>
+          ) : (
+            <Box
               sx={{
-                backgroundColor: "rgba(0, 0, 0, .5)",
-                ":hover": {
-                  backgroundColor: "rgb(0, 0, 0)",
-                },
-                color: "white",
-                position: "absolute",
-                bottom: "0px",
-                textTransform: "unset",
+                border: "3px solid #C9C4C2",
+                marginTop: "-45px !important",
+                backgroundColor: "#CFCFCF",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                width: "100%",
+                height: "100%",
               }}
             >
-              <EditIcon fontSize="small" />
-              <Typography variant="caption">Change Image</Typography>
-            </Button>
-          </Box>
+              <SportsMotorsportsIcon
+                sx={{ width: "63px", height: "63px", color: "#919191" }}
+              />
+              <Button
+                sx={{
+                  backgroundColor: "rgba(0, 0, 0, .5)",
+                  ":hover": {
+                    backgroundColor: "rgb(0, 0, 0)",
+                  },
+                  color: "white",
+                  position: "absolute",
+                  bottom: "0px",
+                  textTransform: "unset",
+                }}
+              >
+                <EditIcon fontSize="small" />
+                <Typography variant="caption">Change Image</Typography>
+              </Button>
+            </Box>
+          )}
         </Grid>
         <Grid item xs>
           <Stack>
@@ -90,6 +165,37 @@ const ProfileInfoCard = () => {
           </Stack>
         </Grid>
       </Grid>
+      <Dialog onClose={handleClose} open={open}>
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          Modal title
+        </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <DialogContent dividers>
+          <TextField
+            id="filled-basic"
+            label="Filled"
+            variant="filled"
+            onChange={handleChangeImageUrl}
+            value={imageUrl}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleSubmit} disabled={!imageUrl}>
+            Save changes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

@@ -1,11 +1,11 @@
-import { RANKING_BEST_SESSION_URL } from "../../../utils/api-constants";
+import { GET_RANKING_URL } from "../../../utils/api-constants";
 import { baseApiSlice } from "./baseApiSlice";
 
 export const rankingApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getBestLastSession: builder.query({
+    getRanking: builder.query({
       query: ({ trackId, kartId, racerId }) => ({
-        url: RANKING_BEST_SESSION_URL,
+        url: GET_RANKING_URL,
         params: {
           trackId,
           kartId,
@@ -17,4 +17,4 @@ export const rankingApiSlice = baseApiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetBestLastSessionQuery } = rankingApiSlice;
+export const { useGetRankingQuery } = rankingApiSlice;
