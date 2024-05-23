@@ -37,9 +37,9 @@ const SessionList = () => {
 
   const filteredRaces =
     racesData?.filter((race) => {
-      const { raceKart, track } = race;
+      const { raceKart, track: raceTrack } = race;
       const filterByKart = kart ? raceKart.kartId === kart : true;
-      const filterByTrack = track ? track.trackId === track : true;
+      const filterByTrack = track ? raceTrack.trackId === track : true;
       return filterByKart || filterByTrack;
     }) ?? [];
 

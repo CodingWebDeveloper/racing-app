@@ -4,7 +4,9 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Chip,
   Divider,
+  Grid,
   Stack,
   Typography,
 } from "@mui/material";
@@ -13,7 +15,7 @@ import NearMeIcon from "@mui/icons-material/NearMe";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const TrackCard = ({ track }) => {
-  const { src, name, location } = track;
+  const { trackName, city, trackLengthKms, bestTrackTime } = track;
 
   return (
     <Card
@@ -23,16 +25,10 @@ const TrackCard = ({ track }) => {
         padding: 2,
       }}
     >
-      <CardMedia
-        component="img"
-        sx={{ width: 151 }}
-        image={src}
-        alt="Live from space album cover"
-      />
-      <Stack spacing={2}>
+      <Stack spacing={1}>
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h5">
-            {name}
+            {trackName}
           </Typography>
           <Stack direction="row" alignItems="center" spacing={1}>
             <PlaceIcon color="primary" />
@@ -41,23 +37,13 @@ const TrackCard = ({ track }) => {
               color="text.secondary"
               component="div"
             >
-              {location}
+              {city}
             </Typography>
           </Stack>
+          <Typography variant="caption">{`Best Track Time: ${bestTrackTime}`}</Typography>
+          <Divider sx={{ backgroundColor: "gray" }} />
         </CardContent>
-        <Divider sx={{ backgroundColor: "gray" }} />
-        <Button variant="text">
-          <NearMeIcon color="primary" />
-          <Typography sx={{ textTransform: "none", color: "black" }}>
-            Get directions
-          </Typography>
-          <KeyboardArrowRightIcon sx={{ color: "black" }} />
-        </Button>
-        <Stack
-          direction="row"
-          alignItems="center"
-          sx={{ pl: 1, pb: 1 }}
-        ></Stack>
+        <Chip label={`Length: ${trackLengthKms}km`} variant="outlined" />
       </Stack>
     </Card>
   );

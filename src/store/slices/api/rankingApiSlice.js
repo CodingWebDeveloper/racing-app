@@ -3,7 +3,7 @@ import { baseApiSlice } from "./baseApiSlice";
 
 export const rankingApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getRanking: builder.query({
+    getRankings: builder.query({
       query: ({ trackId, kartId, racerId }) => ({
         url: GET_RANKING_URL,
         params: {
@@ -17,4 +17,4 @@ export const rankingApiSlice = baseApiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetRankingQuery } = rankingApiSlice;
+export const { useGetRankingsQuery } = rankingApiSlice;

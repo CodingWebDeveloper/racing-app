@@ -1,122 +1,47 @@
 import React from "react";
-import { Grid, Box, Stack, Typography, Paper } from "@mui/material";
-import SportsMotorsportsIcon from "@mui/icons-material/SportsMotorsports";
+import { Grid, Typography } from "@mui/material";
+import { useGetRankingsQuery } from "../../store/slices/api/rankingApiSlice";
+import LoadingSpinner from "../shared/LoadingSpinner";
+import { useSelector } from "react-redux";
+import { selectKart, selectTrack } from "../../store/slices/raceFilterSlice";
+import { selectUser } from "../../store/slices/usersSlice";
+import OtherTopRankingCard from "../other-top-ranking-card/OtherTopRankingCard";
+import FirstTopRankingCard from "../first-top-ranking-card/FirstTopRankingCard";
 
 const Top3Ranking = () => {
+  // Selectors
+  const user = useSelector(selectUser);
+  const track = useSelector(selectTrack);
+  const kart = useSelector(selectKart);
+
+  // Queries
+  const { data, isLoading } = useGetRankingsQuery({
+    racerId: user.racerId,
+    trackId: track,
+    kartId: kart,
+  });
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (data?.length === 0) {
+    return (
+      <Typography sx={{ color: "white" }} textAlign="center">
+        No Rankings
+      </Typography>
+    );
+  }
+
+  // Other variables
+  const top3 = data?.slice(0, 3) ?? [];
+
   return (
-    <Paper sx={{ background: "linear-gradient(0deg, red 50%, black 93%)" }}>
-      <Grid container>
-        <Grid item xs={4}>
-          <Stack
-            className="bg-carbon-fiber"
-            spacing={2}
-            alignItems={"center"}
-            sx={{
-              transform: "scale(0.75)",
-              color: "white",
-            }}
-          >
-            <Stack>
-              <Box
-                sx={{
-                  border: "3px solid #C9C4C2",
-                  marginTop: "-45px !important",
-                  height: "120px",
-                  backgroundColor: "#CFCFCF",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  position: "relative",
-                }}
-              >
-                <SportsMotorsportsIcon
-                  sx={{ width: "126px", height: "126px", color: "#919191" }}
-                />
-              </Box>
-              <Box className="ribbon">
-                <span className="ribbon2">2ND</span>
-              </Box>
-            </Stack>
-
-            <Typography variant="h6">Jake Black</Typography>
-            <Typography variant="h4">00:55.796</Typography>
-            <Typography variant="caption">31.08.2022</Typography>
-          </Stack>
-        </Grid>
-        <Grid item xs={4}>
-          <Stack
-            spacing={2}
-            sx={{
-              background: "linear-gradient(0deg, red 50%, black 97%)",
-              alignItems: "center",
-              color: "white",
-            }}
-          >
-            <Box
-              sx={{
-                border: "3px solid #D86B39",
-                marginTop: "-45px",
-                height: "120px",
-                backgroundColor: "#CFCFCF",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <SportsMotorsportsIcon
-                sx={{ width: "126px", height: "126px", color: "#919191" }}
-              />
-            </Box>
-            <Typography sx={{ textTransform: "uppercase" }} variant="caption">
-              <Typography component="span" variant="h6">
-                1
-              </Typography>
-              st Place
-            </Typography>
-            <Typography variant="h6">Jake Black</Typography>
-            <Typography variant="h4">00:55.796</Typography>
-            <Typography variant="caption">31.08.2022</Typography>
-          </Stack>
-        </Grid>
-        <Grid item xs={4}>
-          <Stack
-            className="bg-carbon-fiber"
-            spacing={2}
-            alignItems={"center"}
-            sx={{
-              transform: "scale(0.75)",
-              color: "white",
-            }}
-          >
-            <Stack>
-              <Box
-                sx={{
-                  border: "3px solid #6B3E29",
-                  marginTop: "-45px !important",
-                  height: "120px",
-                  backgroundColor: "#CFCFCF",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  position: "relative",
-                }}
-              >
-                <SportsMotorsportsIcon
-                  sx={{ width: "126px", height: "126px", color: "#919191" }}
-                />
-              </Box>
-              <Box className="ribbon">
-                <span className="ribbon2">3RD</span>
-              </Box>
-            </Stack>
-
-            <Typography variant="h6">Jake Black</Typography>
-            <Typography variant="h4">00:55.796</Typography>
-            <Typography variant="caption">31.08.2022</Typography>
-          </Stack>
-        </Grid>
-      </Grid>
-    </Paper>
+    <Grid container>
+      {top3[1] && <OtherTopRankingCard ranking={top3[1]} />}
+      {top3[0] && <FirstTopRankingCard ranking={top3[0]} />}
+      {top3[2] && <OtherTopRankingCard ranking={top3[2]} />}
+    </Grid>
   );
 };
 

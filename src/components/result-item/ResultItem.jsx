@@ -2,8 +2,17 @@ import { KeyboardArrowRight } from "@mui/icons-material";
 import { Avatar, Box, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 
-const ResultItem = ({ ranking, user, updatedOn, time, active }) => {
-  const { avatarUrl, firstName, lastName } = user;
+const ResultItem = ({ ranking, active }) => {
+  const {
+    position,
+    racerPhoto,
+    racerFirstName,
+    racerLastName,
+    raceDate,
+    bestTime,
+  } = ranking;
+
+  const name = `${racerFirstName} ${racerLastName}`;
   return (
     <Grid
       container
@@ -38,18 +47,18 @@ const ResultItem = ({ ranking, user, updatedOn, time, active }) => {
               },
             }}
           >
-            {ranking}
+            {position}
           </Box>
-          <Avatar src={avatarUrl} />
-          <Typography
-            sx={{ color: "white" }}
-          >{`${firstName} ${lastName}`}</Typography>
+          <Avatar src={racerPhoto} />
+          <Typography sx={{ color: "white" }}>{name}</Typography>
         </Stack>
       </Grid>
       <Grid item xs>
         <Stack direction="row" justifyContent="space-between">
-          <Typography sx={{ color: "white" }}>{updatedOn}</Typography>
-          <Typography sx={{ color: "white" }}>{time}</Typography>
+          <Typography sx={{ color: "white" }}>{raceDate}</Typography>
+          <Typography sx={{ color: "#6CB26D", fontWeight: "bolder" }}>
+            {bestTime}
+          </Typography>
         </Stack>
       </Grid>
       <Grid item>

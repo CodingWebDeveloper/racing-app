@@ -1,4 +1,7 @@
-import { RACES_BY_RACER_ID_URL } from "../../../utils/api-constants";
+import {
+  LAST_RACE_BY_RACER_ID_URL,
+  RACES_BY_RACER_ID_URL,
+} from "../../../utils/api-constants";
 import { baseApiSlice } from "./baseApiSlice";
 
 export const racesApiSlice = baseApiSlice.injectEndpoints({
@@ -9,7 +12,13 @@ export const racesApiSlice = baseApiSlice.injectEndpoints({
       }),
       providesTags: ["RACES"],
     }),
+    getLastRace: builder.query({
+      query: ({ racerId }) => ({
+        url: LAST_RACE_BY_RACER_ID_URL.replace(":racerId", racerId),
+        providesTags: ["RACES"],
+      }),
+    }),
   }),
 });
 
-export const { useGetRacesByRacerIdQuery } = racesApiSlice;
+export const { useGetRacesByRacerIdQuery, useGetLastRaceQuery } = racesApiSlice;

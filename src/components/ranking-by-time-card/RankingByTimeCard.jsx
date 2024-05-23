@@ -6,8 +6,50 @@ import SelectInput from "../select-input/SelectInput";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Track from "@mui/icons-material/Route";
 import SectionHeaderCard from "../section-header-card/SectionHeaderCard";
+import { useGetAllTracksQuery } from "../../store/slices/api/tracksApiSlice";
+import { useGetAllKartsQuery } from "../../store/slices/api/kartsApiSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectKart,
+  selectTrack,
+  setKart,
+  setTrack,
+} from "../../store/slices/raceFilterSlice";
 
 const RankingByTimeCard = () => {
+  // General hooks
+  const dispatch = useDispatch();
+
+  // Selectors
+  const track = useSelector(selectTrack);
+  const kart = useSelector(selectKart);
+
+  // Queries
+  const { data: tracksData } = useGetAllTracksQuery();
+  const { data: kartsData } = useGetAllKartsQuery();
+
+  // Handlers
+  const handleChangeTrack = (event) => {
+    dispatch(setTrack(event.target.value));
+  };
+
+  const handleChangeKart = (event) => {
+    dispatch(setKart(event.target.value));
+  };
+
+  // Other variables
+  const trackOptions =
+    tracksData?.map((track) => ({
+      label: track.trackName,
+      value: track.trackId,
+    })) ?? [];
+
+  const kartOptions =
+    kartsData?.map((kart) => ({
+      label: kart.model,
+      value: kart.kartId,
+    })) ?? [];
+
   return (
     <Box>
       <SectionHeaderCard
@@ -27,26 +69,27 @@ const RankingByTimeCard = () => {
         <Grid container columnSpacing={1}>
           <Grid item xs={6}>
             <SelectInput
-              label={"Car model"}
+              label={"Kart"}
               icon={<DirectionsCarIcon sx={{ color: "red" }} />}
-              value={"SR5"}
-              handleChange={() => {}}
-              options={[{ value: "SR5", label: "SR5" }]}
+              value={kart}
+              handleChange={handleChangeKart}
+              options={kartOptions}
             />
           </Grid>
           <Grid item xs={6}>
             <SelectInput
               label={"Track"}
               icon={<Track sx={{ color: "red" }} />}
-              value={"1"}
-              handleChange={() => {}}
-              options={[{ value: "1", label: "Laute12" }]}
+              value={track}
+              handleChange={handleChangeTrack}
+              options={trackOptions}
             />
           </Grid>
         </Grid>
       </Stack>
-
-      <Top3Ranking />
+      <Box sx={{ background: "rgba(0, 0, 0, 0.8)", padding: 1 }}>
+        <Top3Ranking />
+      </Box>
     </Box>
   );
 };

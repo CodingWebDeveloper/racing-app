@@ -24,8 +24,8 @@ const FilterSession = () => {
   const kart = useSelector(selectKart);
 
   // Queries
-  const { data: allTracksData } = useGetAllTracksQuery();
-  const { data: allKartsData } = useGetAllKartsQuery();
+  const { data: tracksData } = useGetAllTracksQuery();
+  const { data: kartsData } = useGetAllKartsQuery();
 
   // Handlers
   const handleChangeTrack = (event) => {
@@ -41,13 +41,13 @@ const FilterSession = () => {
   };
   // Other variables
   const trackOptions =
-    allTracksData?.map((track) => ({
+    tracksData?.map((track) => ({
       label: track.trackName,
       value: track.trackId,
     })) ?? [];
 
-  const kartsOptions =
-    allKartsData?.map((kart) => ({
+  const kartOptions =
+    kartsData?.map((kart) => ({
       label: kart.model,
       value: kart.kartId,
     })) ?? [];
@@ -81,11 +81,11 @@ const FilterSession = () => {
           options={trackOptions}
         />
         <SelectInput
-          label={"Car model"}
+          label={"Kart"}
           icon={<DirectionsCarIcon sx={{ color: "red" }} />}
           value={kart}
           handleChange={handleChangeKart}
-          options={kartsOptions}
+          options={kartOptions}
         />
       </Stack>
     </Paper>

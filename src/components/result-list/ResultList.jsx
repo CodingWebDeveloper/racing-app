@@ -1,71 +1,63 @@
 import React from "react";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import ResultItem from "../result-item/ResultItem";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { useNavigate } from "react-router-dom";
+import { useGetRankingsQuery } from "../../store/slices/api/rankingApiSlice";
+import LoadingSpinner from "../shared/LoadingSpinner";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../store/slices/usersSlice";
+import { selectKart, selectTrack } from "../../store/slices/raceFilterSlice";
 
-const results = [
-  {
-    ranking: 1,
-    user: { avatarUrl: "", firstName: "Joe", lastName: "Rogan" },
-    updatedOn: "10.05.2024",
-    time: "1.20.34",
-  },
-  {
-    ranking: 1,
-    user: { avatarUrl: "", firstName: "Joe", lastName: "Rogan" },
-    updatedOn: "10.05.2024",
-    time: "1.20.34",
-  },
-  {
-    ranking: 1,
-    user: { avatarUrl: "", firstName: "Joe", lastName: "Rogan" },
-    updatedOn: "10.05.2024",
-    time: "1.20.34",
-  },
-];
 const ResultList = () => {
+  // General hooks
+  const navigate = useNavigate();
+
+  // Selectors
+  const user = useSelector(selectUser);
+  const track = useSelector(selectTrack);
+  const kart = useSelector(selectKart);
+
+  // Queries
+  const { data, isLoading } = useGetRankingsQuery({
+    racerId: user.racerId,
+    trackId: track,
+    kartId: kart,
+  });
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (data?.length === 0) {
+    return (
+      <Typography sx={{ color: "white" }} textAlign="center">
+        No Rankings
+      </Typography>
+    );
+  }
+
+  // Other variables
+  const top3 = data?.slice(0, 3) ?? [];
+
+  // Handlers
+  const handleNavigateRanking = () => {
+    navigate("/ranking");
+  };
+
   return (
     <Box sx={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
-      <Grid
-        container
-        sx={{
-          backgroundColor: "black",
-          paddingBlock: "8px",
-          alignItems: "center",
-        }}
-      >
-        <Grid item xs>
-          <Button
-            fullWidth
-            sx={{ borderRadius: "0px 8px 8px 0px", padding: "4px" }}
-            variant="contained"
-          >
-            Next results <KeyboardArrowDownIcon />
-          </Button>
-        </Grid>
-        <Grid item xs>
-          <Typography sx={{ color: "white", textAlign: "center" }}>
-            or
-          </Typography>
-        </Grid>
-        <Grid item xs>
-          <Button
-            fullWidth
-            sx={{ borderRadius: "8px 0px 0px 8px", padding: "4px" }}
-            variant="contained"
-          >
-            Previous results <KeyboardArrowUpIcon />
-          </Button>
-        </Grid>
-      </Grid>
-      {results.map((result, index) => (
-        <ResultItem key={result.id} {...result} active={index === 2} />
+      {top3.map((ranking) => (
+        <ResultItem
+          key={ranking.position}
+          ranking={ranking}
+          active={ranking.racerId === user.racerId}
+        />
       ))}
       <Button
         fullWidth
         variant="contained"
         sx={{ textTransform: "unset", borderRadius: "unset" }}
+        onClick={handleNavigateRanking}
       >
         View track results
       </Button>

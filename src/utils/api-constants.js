@@ -24,6 +24,6 @@ export const TRACKS_PREFERRED_URL =
 
 // Races url
 export const RACES_BY_RACER_ID_URL = BACKEND_URL + "/races/racer/:racerId";
-
+export const LAST_RACE_BY_RACER_ID_URL = BACKEND_URL + "/races/last/:racerId";
 // Karts url
 export const KARTS_GET_ALL_URL = BACKEND_URL + "/karts/all";
