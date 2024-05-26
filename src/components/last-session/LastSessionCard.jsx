@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Stack, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import Results from "@mui/icons-material/EmojiFlags";
 import SectionHeaderCard from "../section-header-card/SectionHeaderCard";
 import SessionCard from "../session-card/SessionCard";

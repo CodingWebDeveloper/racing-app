@@ -44,9 +44,7 @@ const Ranking = () => {
       trackId: track,
       kartId: kart,
     },
-    {
-      skip: !user?.racerId,
-    }
+    { skip: !user.racerId || !track || !kart }
   );
   const { data: allTracksData } = useGetAllTracksQuery();
   const { data: allKartsData } = useGetAllKartsQuery();

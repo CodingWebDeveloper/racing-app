@@ -2,7 +2,7 @@ import React from "react";
 import { useGetAllTracksQuery } from "../../store/slices/api/tracksApiSlice";
 import LoadingSpinner from "../shared/LoadingSpinner";
 import TrackCard from "../track-card/TrackCard";
-import { Grid, Stack } from "@mui/material";
+import { Grid } from "@mui/material";
 
 const TrackList = () => {
   const { data, isLoading } = useGetAllTracksQuery();

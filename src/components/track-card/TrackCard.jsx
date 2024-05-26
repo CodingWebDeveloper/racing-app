@@ -1,18 +1,13 @@
 import React from "react";
 import {
-  Button,
   Card,
   CardContent,
-  CardMedia,
   Chip,
   Divider,
-  Grid,
   Stack,
   Typography,
 } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
-import NearMeIcon from "@mui/icons-material/NearMe";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const TrackCard = ({ track }) => {
   const { trackName, city, trackLengthKms, bestTrackTime } = track;

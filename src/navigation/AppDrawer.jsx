@@ -2,13 +2,11 @@ import React from "react";
 import {
   AppBar,
   Box,
-  Button,
   CssBaseline,
   Drawer,
   Grid,
   IconButton,
   InputBase,
-  Stack,
   Toolbar,
   Typography,
   alpha,
@@ -17,7 +15,6 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-import Tracks from "@mui/icons-material/Route";
 import DrawerContent from "./DrawerContent";
 import { signOutUser } from "../utils/firebase";
 

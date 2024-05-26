@@ -15,11 +15,14 @@ const Top3Ranking = () => {
   const kart = useSelector(selectKart);
 
   // Queries
-  const { data, isLoading } = useGetRankingsQuery({
-    racerId: user.racerId,
-    trackId: track,
-    kartId: kart,
-  });
+  const { data, isLoading } = useGetRankingsQuery(
+    {
+      racerId: user.racerId,
+      trackId: track,
+      kartId: kart,
+    },
+    { skip: !user.racerId || !track || !kart }
+  );
 
   if (isLoading) {
     return <LoadingSpinner />;

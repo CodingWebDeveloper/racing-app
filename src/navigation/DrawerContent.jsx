@@ -19,6 +19,7 @@ import Ranking from "@mui/icons-material/EmojiEvents";
 import HexagonIcon from "@mui/icons-material/Hexagon";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Tracks from "@mui/icons-material/Route";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../store/slices/usersSlice";
@@ -53,11 +54,16 @@ const DrawerContent = () => {
     navigate("/tracks");
   };
 
+  const handleNavigateAdminConsole = () => {
+    navigate("/admin-console");
+  };
+
   // Other variables
   const isDashboard = pathname === "/";
   const isProfile = pathname === "/profile";
   const isRanking = pathname === "/ranking";
   const isTracks = pathname === "/tracks";
+  const isAdminConsole = pathname === "/admin-console";
   const { firstName, lastName, expertise, photo } = user ?? {};
   return (
     <div>
@@ -142,6 +148,21 @@ const DrawerContent = () => {
             <ListItemText
               sx={{ color: "white", fontWeight: "bold" }}
               primary="Tracks"
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem
+          sx={isAdminConsole ? activeStyles : {}}
+          onClick={handleNavigateAdminConsole}
+          disablePadding
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <AdminPanelSettingsIcon sx={{ color: "#C80314" }} />
+            </ListItemIcon>
+            <ListItemText
+              sx={{ color: "white", fontWeight: "bold" }}
+              primary="Admin Console"
             />
           </ListItemButton>
         </ListItem>

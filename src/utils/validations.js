@@ -58,3 +58,17 @@ export const validateProfile = (userInput) => {
 
   return evaluatedError;
 };
+
+export const validateKart = (kartInput) => {
+  const { model, horsePower, kartNumber, engineCC, kartPhoto } = kartInput;
+  const valid = model && horsePower && kartNumber && engineCC && kartPhoto;
+
+  return valid;
+};
+
+export const validateTrack = (kartInput) => {
+  const { trackName, city, trackLengthKms, bestTrackTime } = kartInput;
+  const valid = trackName && city && trackLengthKms && bestTrackTime;
+
+  return valid;
+};
