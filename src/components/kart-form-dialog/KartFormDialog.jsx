@@ -34,7 +34,6 @@ const KartFormDialog = ({
     setIsFirstSubmitted(true);
     await submitHandler(kartInput);
     setKartInput(INITIAL_STATE);
-    handleClose();
   };
 
   const handleModelChange = (event) => {

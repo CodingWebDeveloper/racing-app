@@ -33,8 +33,6 @@ const TrackFormDialog = ({
   const handleSubmit = async () => {
     setIsFirstSubmitted(true);
     await submitHandler(trackInput);
-    setTrackInput(INITIAL_STATE);
-    handleClose();
   };
 
   const handleTrackNameChange = (event) => {

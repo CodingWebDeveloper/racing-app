@@ -16,6 +16,7 @@ export const USER_LOGIN_URL = BACKEND_URL + "/racers/login";
 export const USER_REGISTER_URL = BACKEND_URL + "/racers/save";
 export const USER_GET_BY_RACER_ID_URL = BACKEND_URL + "/racers/:racerId";
 export const USER_GET_BY_EMAIL_URL = BACKEND_URL + "/racers/by-email";
+export const GET_ALL_USERS_URL = BACKEND_URL + "/racers/all";
 
 // Tracks url
 export const TRACKS_GET_ALL_URL = BACKEND_URL + "/tracks/all";
@@ -27,6 +28,8 @@ export const CREATE_TRACK_URL = BACKEND_URL + "/tracks/save";
 // Races url
 export const RACES_BY_RACER_ID_URL = BACKEND_URL + "/races/racer/:racerId";
 export const LAST_RACE_BY_RACER_ID_URL = BACKEND_URL + "/races/last/:racerId";
+export const RACES_URL = BACKEND_URL + "/races";
+export const DELETE_RACE_by_ID_URL = BACKEND_URL + "/races/:raceId";
 
 // Karts url
 export const KARTS_GET_ALL_URL = BACKEND_URL + "/karts/all";

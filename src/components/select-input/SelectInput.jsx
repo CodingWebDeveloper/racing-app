@@ -7,6 +7,8 @@ const SelectInput = ({
   options,
   handleChange,
   placeholder,
+  error,
+  helperText,
 }) => {
   return (
     <FormControl sx={{ minWidth: 120 }} size="small" fullWidth>
@@ -20,6 +22,7 @@ const SelectInput = ({
         label={label}
         displayEmpty
         onChange={handleChange}
+        error={error}
       >
         <MenuItem value={null} disabled={true}>
           -

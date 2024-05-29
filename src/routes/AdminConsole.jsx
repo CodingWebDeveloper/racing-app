@@ -6,12 +6,11 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import KartsTable from "../components/karts-table/KartsTable";
 import TracksTable from "../components/tracks-table/TracksTable";
-import { useGetAllTracksQuery } from "../store/slices/api/tracksApiSlice";
+import RacesTable from "../components/races-table/RacesTable";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
-  // Queries
-  const { data, isLoading } = useGetAllTracksQuery();
+
   return (
     <div
       role="tabpanel"
@@ -75,7 +74,7 @@ export default function AdminConsole() {
         <TracksTable />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        <RacesTable />
       </CustomTabPanel>
     </Box>
   );

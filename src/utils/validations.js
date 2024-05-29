@@ -61,14 +61,34 @@ export const validateProfile = (userInput) => {
 
 export const validateKart = (kartInput) => {
   const { model, horsePower, kartNumber, engineCC, kartPhoto } = kartInput;
-  const valid = model && horsePower && kartNumber && engineCC && kartPhoto;
+  const valid =
+    Boolean(model) &&
+    Boolean(horsePower) &&
+    Boolean(kartNumber) &&
+    Boolean(engineCC) &&
+    Boolean(kartPhoto);
 
   return valid;
 };
 
 export const validateTrack = (kartInput) => {
   const { trackName, city, trackLengthKms, bestTrackTime } = kartInput;
-  const valid = trackName && city && trackLengthKms && bestTrackTime;
+  const valid =
+    Boolean(trackName) &&
+    Boolean(city) &&
+    Boolean(trackLengthKms) &&
+    Boolean(bestTrackTime);
+
+  return valid;
+};
+
+export const validateRace = (raceInput) => {
+  const { racerId, trackId, kartId, laps } = raceInput;
+  const valid =
+    Boolean(racerId) &&
+    Boolean(trackId) &&
+    Boolean(kartId) &&
+    laps.every((lap) => lap.lapTime);
 
   return valid;
 };

@@ -58,6 +58,8 @@ const KartsTable = () => {
         engineCC: Number(kartInput.engineCC),
         kartPhoto: kartInput.kartPhoto,
       }).unwrap();
+
+      handleClose();
     } catch (error) {}
   };
 
@@ -67,7 +69,6 @@ const KartsTable = () => {
       return;
     }
 
-    console.log(kartInput);
     try {
       await updateKart({
         kartId: currentKartId,
@@ -79,6 +80,8 @@ const KartsTable = () => {
           kartPhoto: kartInput.kartPhoto,
         },
       }).unwrap();
+
+      handleCloseEdit();
     } catch (error) {}
   };
 

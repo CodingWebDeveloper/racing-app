@@ -1,5 +1,6 @@
 import {
   API_METHODS,
+  GET_ALL_USERS_URL,
   USER_GET_BY_EMAIL_URL,
   USER_GET_BY_RACER_ID_URL,
   USER_LOGIN_URL,
@@ -38,6 +39,11 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
         },
       }),
     }),
+    getAllUsers: builder.query({
+      query: () => ({
+        url: GET_ALL_USERS_URL,
+      }),
+    }),
     updateUser: builder.mutation({
       query: ({ racerId, userInput }) => ({
         url: USER_GET_BY_RACER_ID_URL.replace(":racerId", racerId),
@@ -51,6 +57,7 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 export const {
   useGetUserByEmailQuery,
   useGetUserByRacerIdQuery,
+  useGetAllUsersQuery,
   useLoginQuery,
   useRegisterMutation,
   useUpdateUserMutation,
