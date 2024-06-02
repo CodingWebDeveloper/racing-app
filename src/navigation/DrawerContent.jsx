@@ -151,21 +151,23 @@ const DrawerContent = () => {
             />
           </ListItemButton>
         </ListItem>
-        <ListItem
-          sx={isAdminConsole ? activeStyles : {}}
-          onClick={handleNavigateAdminConsole}
-          disablePadding
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <AdminPanelSettingsIcon sx={{ color: "#C80314" }} />
-            </ListItemIcon>
-            <ListItemText
-              sx={{ color: "white", fontWeight: "bold" }}
-              primary="Admin Console"
-            />
-          </ListItemButton>
-        </ListItem>
+        {user?.email === "erkancooo@gmail.com" && (
+          <ListItem
+            sx={isAdminConsole ? activeStyles : {}}
+            onClick={handleNavigateAdminConsole}
+            disablePadding
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <AdminPanelSettingsIcon sx={{ color: "#C80314" }} />
+              </ListItemIcon>
+              <ListItemText
+                sx={{ color: "white", fontWeight: "bold" }}
+                primary="Admin Console"
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
       </List>
       <Divider />
     </div>

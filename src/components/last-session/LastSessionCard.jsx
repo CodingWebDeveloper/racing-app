@@ -24,8 +24,12 @@ const LastSessionCard = () => {
     setCurrentRaceId(id);
   };
 
-  if (isLoading || !data) {
+  if (isLoading) {
     return <LoadingSpinner />;
+  }
+
+  if (!data) {
+    return;
   }
 
   return (

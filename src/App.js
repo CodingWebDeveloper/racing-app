@@ -93,7 +93,9 @@ function App() {
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path="ranking" element={<Ranking />} />
           <Route path="tracks" element={<Tracks />} />
-          <Route path="admin-console" element={<AdminConsole />} />
+          {user?.email === "erkancooo@gmail.com" && (
+            <Route path="admin-console" element={<AdminConsole />} />
+          )}
         </Route>
 
         <Route
