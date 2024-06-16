@@ -23,6 +23,7 @@ import {
   useGetUserByRacerIdQuery,
 } from "./store/slices/api/usersApiSlice";
 import AdminConsole from "./routes/AdminConsole";
+import Karts from "./routes/Karts";
 
 function App() {
   // General hooks
@@ -93,6 +94,7 @@ function App() {
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path="ranking" element={<Ranking />} />
           <Route path="tracks" element={<Tracks />} />
+          <Route path="karts" element={<Karts />} />
           {user?.email === "erkancooo@gmail.com" && (
             <Route path="admin-console" element={<AdminConsole />} />
           )}

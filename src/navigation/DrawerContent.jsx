@@ -18,7 +18,8 @@ import Profile from "@mui/icons-material/SportsMotorsports";
 import Ranking from "@mui/icons-material/EmojiEvents";
 import HexagonIcon from "@mui/icons-material/Hexagon";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Tracks from "@mui/icons-material/Route";
+import TracksIcon from "@mui/icons-material/Route";
+import KartIcon from "@mui/icons-material/DirectionsCar";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -54,6 +55,10 @@ const DrawerContent = () => {
     navigate("/tracks");
   };
 
+  const handleNavigateKarts = () => {
+    navigate("/karts");
+  };
+
   const handleNavigateAdminConsole = () => {
     navigate("/admin-console");
   };
@@ -63,6 +68,7 @@ const DrawerContent = () => {
   const isProfile = pathname === "/profile";
   const isRanking = pathname === "/ranking";
   const isTracks = pathname === "/tracks";
+  const isKarts = pathname === "/karts";
   const isAdminConsole = pathname === "/admin-console";
   const { firstName, lastName, expertise, photo } = user ?? {};
   return (
@@ -143,11 +149,26 @@ const DrawerContent = () => {
         >
           <ListItemButton>
             <ListItemIcon>
-              <Tracks sx={{ color: "#C80314" }} />
+              <TracksIcon sx={{ color: "#C80314" }} />
             </ListItemIcon>
             <ListItemText
               sx={{ color: "white", fontWeight: "bold" }}
               primary="Tracks"
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem
+          sx={isKarts ? activeStyles : {}}
+          onClick={handleNavigateKarts}
+          disablePadding
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <KartIcon sx={{ color: "#C80314" }} />
+            </ListItemIcon>
+            <ListItemText
+              sx={{ color: "white", fontWeight: "bold" }}
+              primary="Karts"
             />
           </ListItemButton>
         </ListItem>
