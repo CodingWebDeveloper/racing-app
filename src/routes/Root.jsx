@@ -13,7 +13,7 @@ const Root = ({ isAuthenticated }) => {
       </AppDrawer>
     </Box>
   ) : (
-    <Navigate to="/login" />
+    <Navigate to="/landing-page" />
   );
 };
 

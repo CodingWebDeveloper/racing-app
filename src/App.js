@@ -24,6 +24,7 @@ import {
 } from "./store/slices/api/usersApiSlice";
 import AdminConsole from "./routes/AdminConsole";
 import Karts from "./routes/Karts";
+import LandingPage from "./routes/LandingPage";
 
 function App() {
   // General hooks
@@ -101,6 +102,10 @@ function App() {
         </Route>
 
         <Route
+          path="/landing-page"
+          element={isAuthenticated ? <Navigate to="/" /> : <LandingPage />}
+        />
+        <Route
           path="/register"
           element={isAuthenticated ? <Navigate to="/" /> : <Register />}
         />
@@ -108,7 +113,7 @@ function App() {
           path="/login"
           element={isAuthenticated ? <Navigate to="/" /> : <LoginIn />}
         />
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<Navigate to="/landing-page" />} />
       </Routes>
     </Router>
   );
